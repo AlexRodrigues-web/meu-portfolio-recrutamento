@@ -24,3 +24,6 @@ Linguagem: PHP
 Banco de Dados: MySQL
 
 Inteligência Artificial: Algoritmos de machine learning para análise de perfis.
+
+Status do Projeto
+🚧 Em desenvolvimento - O projeto está sendo estruturado e evoluirá com novas funcionalidades.
