@@ -1,0 +1,19 @@
+{
+    "name": "meu-portfolio-recrutamento/backend",
+    "description": "Backend do sistema de recrutamento",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MeuPortfolioRecrutamento\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alex Oliveira",
+            "email": "alexrroliver200@gmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
+}

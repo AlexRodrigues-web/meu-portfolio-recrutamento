@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Protegida</title>
+    <script>
+        // Função para verificar o token
+        function verificarToken() {
+            const token = localStorage.getItem('token'); // Obtém o token do localStorage
+            if (!token) {
+                // Se não houver token, redireciona para a página de login
+                window.location.href = 'login.html';
+            } else {
+                // Opcional: decodificar e verificar o token
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1])); // Decodifica o payload do token
+                    const exp = payload.exp; // Obtém a data de expiração
+                    if (exp < Date.now() / 1000) {
+                        // Token expirado, redireciona para o login
+                        localStorage.removeItem('token');
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error('Erro ao decodificar o token:', error);
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        window.onload = verificarToken; // Verifica o token quando a página carrega
+
+        function logout() {
+            localStorage.removeItem('token'); // Remove o token
+            window.location.href = 'login.html'; // Redireciona para o login
+        }
+    </script>
+</head>
+<body>
+    <h1>Bem-vindo à Página Protegida</h1>
+    <p>Esta é uma página restrita, acessível apenas para usuários logados.</p>
+    <button onclick="logout()">Logout</button>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script>
+        function fazerLogin(event) {
+            event.preventDefault(); // Previne o comportamento padrão do formulário
+
+            const email = document.getElementById('email').value; // Obtém o valor do campo de email
+            const senha = document.getElementById('senha').value; // Obtém o valor do campo de senha
+
+            // Faz a requisição AJAX para o servidor
+            fetch('http://localhost/Projetos/meu-portfolio-recrutamento/backend/login.php', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ email, senha })
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    // Armazena o token no localStorage
+                    localStorage.setItem('token', data.token);
+                    document.getElementById('message').innerText = "Login bem-sucedido!";
+                    // Redireciona para outra página ou atualiza a UI
+                    window.location.href = 'pagina_protegida.html'; // Exemplo de redirecionamento
+                } else {
+                    document.getElementById('message').innerText = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao fazer login:', error);
+                document.getElementById('message').innerText = "Erro no login. Tente novamente.";
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form onsubmit="fazerLogin(event)">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <div id="message" style="color: red; margin-top: 10px;"></div> <!-- Área para mensagens -->
+</body>
+</html>
